@@ -1,16 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6366f1" />
-      <stop offset="50%" stop-color="#38bdf8" />
-      <stop offset="100%" stop-color="#10b981" />
+    <linearGradient id="border" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="0.5" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#d946ef"/>
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    <linearGradient id="p1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#67e8f9"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="p2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e9d5ff"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <filter id="glowBlue" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowPurple" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="borderGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-  <rect width="64" height="64" rx="16" fill="#090d16" />
-  <rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="url(#grad)" stroke-width="2.5" />
-  <text x="32" y="41" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="24" font-weight="800" fill="url(#grad)" text-anchor="middle" filter="url(#glow)">AK</text>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="78" fill="#03050a"/>
+
+  <!-- Glowing rounded border -->
+  <rect x="27" y="27" width="458" height="458" rx="68"
+        fill="none" stroke="url(#border)" stroke-width="8"
+        filter="url(#borderGlow)"/>
+  <rect x="27" y="27" width="458" height="458" rx="68"
+        fill="none" stroke="url(#border)" stroke-width="5"/>
+
+  <!-- Left code-P: |> -->
+  <g filter="url(#glowBlue)">
+    <rect x="103" y="132" width="38" height="248" rx="10" fill="url(#p1)"/>
+    <path d="M158 139 L258 218 Q273 230 258 242 L158 321
+             L158 270 L214 230 L158 190 Z"
+          fill="url(#p1)"/>
+  </g>
+
+  <!-- Right code-P: |> -->
+  <g filter="url(#glowPurple)">
+    <rect x="301" y="132" width="38" height="248" rx="10" fill="url(#p2)"/>
+    <path d="M356 139 L456 218 Q471 230 456 242 L356 321
+             L356 270 L412 230 L356 190 Z"
+          fill="url(#p2)"/>
+  </g>
 </svg>
