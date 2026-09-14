@@ -171,18 +171,6 @@ async function loadCloudState() {
 
   if (error) throw error;
 
-  if (data.length === 0) {
-    const local = readLocalBackup();
-    if (local.cse202.size || local.cse205.size) {
-      AppState.cse202Solved = local.cse202;
-      AppState.cse205Solved = local.cse205;
-      await uploadAllProgress();
-      setAuthStatus('Your existing browser progress was migrated to the cloud.');
-      renderAll();
-      return;
-    }
-  }
-
   AppState.cse202Solved = new Set();
   AppState.cse205Solved = new Set();
   data.forEach(row => {
