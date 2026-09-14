@@ -1200,13 +1200,25 @@ body {
 
 @media (max-width: 860px) {
   .site-header { padding: 0.75rem 1rem; }
-  .header-container { flex-direction: column; gap: 1rem; }
-  .dash-hero { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .header-container { flex-direction: column; gap: 0.85rem; }
+  .nav-pills { flex-wrap: wrap; justify-content: center; width: 100%; }
+  .header-right { flex-wrap: wrap; justify-content: center; width: 100%; gap: 0.5rem; }
+  .main-content { padding: 1.5rem 1rem 3rem; }
+  .dash-hero { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding: 1.5rem; }
   .overall-gauge-box { width: 100%; justify-content: space-around; }
   .subjects-deck { grid-template-columns: 1fr; }
+  .section-cards-grid { grid-template-columns: 1fr; }
+  .subject-banner { padding: 1.25rem 1.5rem; }
   .filter-bar { flex-direction: column; align-items: stretch; }
   .filter-controls-left { flex-direction: column; align-items: stretch; }
   .vibrant-search { width: 100%; }
+  .vibrant-search:focus { width: 100%; }
+}
+
+@media (max-width: 420px) {
+  .nav-pill-btn { padding: 0.45rem 0.85rem; font-size: 0.78rem; }
+  .btn-header-action { padding: 0.4rem 0.6rem; font-size: 0.74rem; }
+  .user-name { display: none; }
 }
 
 /* Keep the tracker behind the authentication gate until a user is signed in. */
