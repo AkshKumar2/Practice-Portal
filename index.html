@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aksh Kumar | Practice Portal</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Parallax Floating Orbs -->
+  <div class="parallax-canvas" aria-hidden="true">
+    <div class="parallax-orb orb-1"></div>
+    <div class="parallax-orb orb-2"></div>
+    <div class="parallax-orb orb-3"></div>
+  </div>
+  <div class="bg-grid-overlay" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-logo js-tab-btn" data-tab="dashboard">
+        <div class="logo-badge">AK</div>
+        <div class="logo-info">
+          <h1>Practice Portal</h1>
+          <span>Practice Questions</span>
+        </div>
+      </div>
+
+      <!-- Navigation Switcher -->
+      <nav class="nav-pills" aria-label="Main navigation">
+        <button class="nav-pill-btn active js-tab-btn" data-tab="dashboard">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Dashboard
+        </button>
+        <button class="nav-pill-btn js-tab-btn" data-tab="cse202">
+          C++ (CSE202)
+          <span class="pill-count">104</span>
+        </button>
+        <button class="nav-pill-btn js-tab-btn" data-tab="cse205">
+          DSA (CSE205)
+          <span class="pill-count">100</span>
+        </button>
+      </nav>
+
+      <!-- Profile & Header Actions -->
+      <div class="header-right">
+        <div class="user-tag">
+          <div class="avatar-initials">AK</div>
+          <span class="user-name">Aksh Kumar</span>
+          <span id="header-nav-stats" style="font-size: 0.72rem; background: rgba(99, 102, 241, 0.2); color: #a5b4fc; padding: 0.15rem 0.5rem; border-radius: var(--radius-full); font-weight: 700; font-family: var(--font-mono);">0%</span>
+        </div>
+
+        <button class="btn-header-action" id="btn-auth" title="Sign in to sync progress">
+          Sign in
+        </button>
+        <button class="btn-header-action" id="btn-logout" title="Sign out" style="display:none;">
+          Sign out
+        </button>
+
+        <button class="btn-header-action" id="btn-export-progress" title="Export progress backup JSON">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Export
+        </button>
+
+        <label class="btn-header-action" style="cursor: pointer;" title="Import progress from backup">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          Import
+          <input type="file" id="import-progress-file" accept=".json" style="display: none;">
+        </label>
+
+        <button class="btn-header-action" id="btn-reset-progress" title="Reset all progress" style="color: var(--accent-rose);">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
+          Reset
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- ==================================================================
+         VIEW 1: DASHBOARD
+         ================================================================== -->
+    <section class="page-view active" id="view-dashboard">
+      
+      <!-- Minimalist Vibrant Hero -->
+      <div class="dash-hero">
+        <div class="dash-hero-left">
+          <h2>Hello, Aksh Kumar</h2>
+          <div class="hero-badge-row">
+            <span class="status-glow-dot"></span>
+            <span>204 Practice Questions</span>
+          </div>
+        </div>
+
+        <div class="overall-gauge-box">
+          <div class="gauge-svg-wrap">
+            <svg class="gauge-svg" viewBox="0 0 64 64">
+              <circle class="gauge-bg" cx="32" cy="32" r="27"></circle>
+              <circle class="gauge-fg" id="dash-circle-fg" cx="32" cy="32" r="27"></circle>
+            </svg>
+            <div class="gauge-text" id="dash-overall-pct">0%</div>
+          </div>
+          <div class="gauge-meta">
+            <h4>Total Completion</h4>
+            <div class="gauge-val" id="dash-overall-done">0 / 204</div>
+            <div class="gauge-sub">All subjects combined</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subject Deck Cards -->
+      <div class="subjects-deck">
+        <!-- CSE202: C++ -->
+        <div class="course-card card-cplus">
+          <div>
+            <div class="course-card-top">
+              <span class="course-code-pill pill-cplus">CSE202 | C++</span>
+              <span class="course-pct-number" id="dash-cse202-pct">0%</span>
+            </div>
+            <h3 class="course-name">Object Oriented Programming</h3>
+
+            <div class="card-prog-wrap">
+              <div class="prog-labels">
+                <span>Progress</span>
+                <span id="dash-cse202-count">0 / 104</span>
+              </div>
+              <div class="prog-track">
+                <div class="prog-fill fill-indigo-grad" id="dash-cse202-bar" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-open-course js-tab-btn" data-tab="cse202">
+            <span>Open C++ Questions</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+        </div>
+
+        <!-- CSE205: DSA -->
+        <div class="course-card card-dsa">
+          <div>
+            <div class="course-card-top">
+              <span class="course-code-pill pill-dsa">CSE205 | DSA</span>
+              <span class="course-pct-number" id="dash-cse205-pct" style="color: #6ee7b7;">0%</span>
+            </div>
+            <h3 class="course-name">Data Structures & Algorithms</h3>
+
+            <div class="card-prog-wrap">
+              <div class="prog-labels">
+                <span>Progress</span>
+                <span id="dash-cse205-count">0 / 100</span>
+              </div>
+              <div class="prog-track">
+                <div class="prog-fill fill-emerald-grad" id="dash-cse205-bar" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-open-course btn-dsa-theme js-tab-btn" data-tab="cse205">
+            <span>Open DSA Questions</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Progress Setter Tool -->
+      <div class="quick-setter-panel">
+        <div class="setter-title-row">
+          <h3>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Quick Progress Adjuster
+          </h3>
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Slide or enter completed questions directly</span>
+        </div>
+
+        <div class="setter-grid">
+          <!-- C++ -->
+          <div class="setter-box">
+            <div class="setter-info-row">
+              <span>C++ (CSE202)</span>
+              <span class="setter-badge" id="quick-badge-cse202">0% (0/104)</span>
+            </div>
+            <div class="slider-row">
+              <input type="range" class="vibrant-slider" id="quick-slider-cse202" min="0" max="104" value="0">
+              <input type="number" class="vibrant-input" id="quick-input-cse202" min="0" max="104" value="0">
+            </div>
+            <div class="preset-pills-row">
+              <button class="btn-preset js-quick-preset" data-subject="cse202" data-pct="10">10%</button>
+              <button class="btn-preset js-quick-preset" data-subject="cse202" data-pct="20">20%</button>
+              <button class="btn-preset js-quick-preset" data-subject="cse202" data-pct="30">30%</button>
+              <button class="btn-preset js-quick-preset" data-subject="cse202" data-pct="50">50%</button>
+              <button class="btn-preset js-quick-preset" data-subject="cse202" data-pct="100">100%</button>
+              <button class="btn-preset js-quick-preset" data-subject="cse202" data-pct="0">Reset</button>
+            </div>
+          </div>
+
+          <!-- DSA -->
+          <div class="setter-box">
+            <div class="setter-info-row">
+              <span>DSA (CSE205)</span>
+              <span class="setter-badge" id="quick-badge-cse205" style="color: #6ee7b7; background: rgba(16, 185, 129, 0.15);">0% (0/100)</span>
+            </div>
+            <div class="slider-row">
+              <input type="range" class="vibrant-slider slider-dsa-accent" id="quick-slider-cse205" min="0" max="100" value="0">
+              <input type="number" class="vibrant-input" id="quick-input-cse205" min="0" max="100" value="0">
+            </div>
+            <div class="preset-pills-row">
+              <button class="btn-preset js-quick-preset" data-subject="cse205" data-pct="10">10%</button>
+              <button class="btn-preset js-quick-preset" data-subject="cse205" data-pct="20">20%</button>
+              <button class="btn-preset js-quick-preset" data-subject="cse205" data-pct="35">35%</button>
+              <button class="btn-preset js-quick-preset" data-subject="cse205" data-pct="50">50%</button>
+              <button class="btn-preset js-quick-preset" data-subject="cse205" data-pct="100">100%</button>
+              <button class="btn-preset js-quick-preset" data-subject="cse205" data-pct="0">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================================================================
+         VIEW 2: CSE205 (DSA)
+         ================================================================== -->
+    <section class="page-view" id="view-cse205">
+      <div class="subject-banner">
+        <div class="subject-banner-left">
+          <h2>DSA (CSE205) Practice</h2>
+          <span>100 Practice Questions | Units I to VI</span>
+        </div>
+        <div class="banner-metric">
+          <div class="banner-metric-pct" id="dsa-banner-pct" style="color: #6ee7b7;">0%</div>
+          <div class="banner-metric-sub" id="dsa-banner-count">0 of 100 Solved</div>
+        </div>
+      </div>
+
+      <!-- Filters Bar -->
+      <div class="filter-bar">
+        <div class="filter-controls-left">
+          <div class="search-wrap">
+            <span class="search-glyph">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <input type="text" id="dsa-search-input" class="vibrant-search" placeholder="Search problem, concept, number...">
+          </div>
+
+          <select id="dsa-status-select" class="vibrant-select" aria-label="Filter status">
+            <option value="all">All Status</option>
+            <option value="completed">Completed Only</option>
+            <option value="pending">To Do Only</option>
+          </select>
+        </div>
+
+        <div class="unit-pills-row">
+          <button class="unit-filter-btn active js-dsa-unit-btn" data-unit="All">All Units</button>
+          <button class="unit-filter-btn js-dsa-unit-btn" data-unit="Unit I">Unit I</button>
+          <button class="unit-filter-btn js-dsa-unit-btn" data-unit="Unit II">Unit II</button>
+          <button class="unit-filter-btn js-dsa-unit-btn" data-unit="Unit III">Unit III</button>
+          <button class="unit-filter-btn js-dsa-unit-btn" data-unit="Unit IV">Unit IV</button>
+          <button class="unit-filter-btn js-dsa-unit-btn" data-unit="Unit V">Unit V</button>
+          <button class="unit-filter-btn js-dsa-unit-btn" data-unit="Unit VI">Unit VI</button>
+        </div>
+      </div>
+
+      <!-- Section-by-Section Blocks for Units I to VI -->
+      <div class="content-sections-container" id="dsa-sections-container">
+        <!-- Dynamically rendered unit blocks -->
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         VIEW 3: CSE202 (C++)
+         ================================================================== -->
+    <section class="page-view" id="view-cse202">
+      <div class="subject-banner">
+        <div class="subject-banner-left">
+          <h2>C++ (CSE202) Practice</h2>
+          <span style="color: #a5b4fc;">104 Practice Questions | Weeks 1 to 15</span>
+        </div>
+        <div class="banner-metric">
+          <div class="banner-metric-pct" id="cpp-banner-pct" style="color: #a5b4fc;">0%</div>
+          <div class="banner-metric-sub" id="cpp-banner-count">0 of 104 Solved</div>
+        </div>
+      </div>
+
+      <!-- Filters Bar -->
+      <div class="filter-bar">
+        <div class="filter-controls-left">
+          <div class="search-wrap">
+            <span class="search-glyph">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <input type="text" id="cpp-search-input" class="vibrant-search" placeholder="Search title, platform, code, topic...">
+          </div>
+
+          <select id="cpp-week-select" class="vibrant-select" aria-label="Filter week">
+            <option value="All">All Weeks (1 to 15)</option>
+            <option value="1">Week 1</option>
+            <option value="2">Week 2</option>
+            <option value="3">Week 3</option>
+            <option value="4">Week 4</option>
+            <option value="5">Week 5</option>
+            <option value="6">Week 6</option>
+            <option value="8">Week 8</option>
+            <option value="9">Week 9</option>
+            <option value="10">Week 10</option>
+            <option value="11">Week 11</option>
+            <option value="12">Week 12</option>
+            <option value="13">Week 13</option>
+          </select>
+
+          <select id="cpp-platform-select" class="vibrant-select" aria-label="Filter platform">
+            <option value="All">All Platforms</option>
+            <option value="LeetCode">LeetCode</option>
+            <option value="Codeforces">Codeforces</option>
+            <option value="GeeksforGeeks">GeeksforGeeks</option>
+            <option value="HackerRank">HackerRank</option>
+            <option value="CodeChef">CodeChef</option>
+          </select>
+
+          <select id="cpp-status-select" class="vibrant-select" aria-label="Filter status">
+            <option value="all">All Status</option>
+            <option value="completed">Completed Only</option>
+            <option value="pending">To Do Only</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section-by-Section Blocks for Weeks 1 to 15 -->
+      <div class="content-sections-container" id="cpp-sections-container">
+        <!-- Dynamically rendered week blocks -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Cloud Auth Modal -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal-box auth-box">
+      <button class="auth-close" id="auth-close" aria-label="Close">×</button>
+      <h3 class="modal-title" id="auth-title">Cloud Sync</h3>
+      <p class="modal-text" id="auth-subtitle">Sign in to save your progress across devices.</p>
+      <form id="auth-form" class="auth-form">
+        <input id="auth-name" type="text" placeholder="Full name" autocomplete="name" style="display:none;">
+        <input id="auth-email" type="email" placeholder="Email" autocomplete="email" required>
+        <input id="auth-password" type="password" placeholder="Password" autocomplete="current-password" minlength="6" required>
+        <button class="btn-open-course" type="submit">Sign in</button>
+      </form>
+      <button class="auth-forgot" id="auth-forgot" type="button">Forgot password?</button>
+      <button class="auth-switch" id="auth-switch" type="button">Already have an account? Sign in</button>
+      <p id="auth-status" class="auth-status"></p>
+    </div>
+  </div>
+
+  <!-- Password Reset Modal -->
+  <div class="modal-overlay" id="reset-modal">
+    <div class="modal-box auth-box">
+      <h3 class="modal-title">Set a new password</h3>
+      <p class="modal-text">Enter a new password for your account.</p>
+      <form id="reset-form" class="auth-form">
+        <input id="reset-password" type="password" placeholder="New password" autocomplete="new-password" minlength="6" required>
+        <input id="reset-password-confirm" type="password" placeholder="Confirm new password" autocomplete="new-password" minlength="6" required>
+        <button class="btn-open-course" type="submit">Update password</button>
+      </form>
+      <p id="reset-status" class="auth-status"></p>
+    </div>
+  </div>
+
+  <!-- Modal Dialog -->
+  <div class="modal-overlay" id="app-modal">
+    <div class="modal-box">
+      <h3 class="modal-title" id="modal-title">Confirm</h3>
+      <p class="modal-text" id="modal-text"></p>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" id="modal-cancel-btn">Cancel</button>
+        <button class="btn-modal-danger" id="modal-confirm-btn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
