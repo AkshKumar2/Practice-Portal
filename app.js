@@ -874,6 +874,7 @@ function setupAuth() {
   const closeBtn = document.getElementById('auth-close');
   const authModal = document.getElementById('auth-modal');
   const switchBtn = document.getElementById('auth-switch');
+  const googleBtn = document.getElementById('google-auth-btn');
   const nameInput = document.getElementById('auth-name');
   const title = document.getElementById('auth-title');
   const subtitle = document.getElementById('auth-subtitle');
@@ -900,6 +901,20 @@ function setupAuth() {
   closeBtn?.addEventListener('click', close);
   authModal?.addEventListener('click', e => { if (e.target === authModal && currentUser) close(); });
   switchBtn?.addEventListener('click', () => { signupMode = !signupMode; updateMode(); });
+
+  googleBtn?.addEventListener('click', async () => {
+    try {
+      setAuthStatus('Connecting to Google...');
+      const redirectTo = `${window.location.origin}${window.location.pathname}`;
+      const { error } = await getSupabase().auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo }
+      });
+      if (error) throw error;
+    } catch (err) {
+      setAuthStatus(err.message, true);
+    }
+  });
 
   form?.addEventListener('submit', async e => {
     e.preventDefault();
